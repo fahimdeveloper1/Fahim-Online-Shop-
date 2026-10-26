@@ -2788,5 +2788,67 @@
 
     init();
   </script>
-</body>
+<!-- FAHIM ONLINE SHOP: WhatsApp Support + Mandatory Login Gate -->
+<style>
+  #fahimWhatsAppSupport {
+    position: fixed;
+    right: 15px;
+    bottom: 85px;
+    z-index: 99999;
+    background: #25D366;
+    color: white;
+    padding: 13px 17px;
+    border-radius: 30px;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 4px 20px #25D36666;
+  }
+
+  #authGateOverlay {
+    z-index: 99990 !important;
+  }
+</style>
+
+<a id="fahimWhatsAppSupport"
+   href="https://wa.me/8801865570014"
+   target="_blank"
+   rel="noopener noreferrer">
+  ☎ WhatsApp সাপোর্ট
+</a>
+
+<script>
+(function () {
+  function enforceLogin() {
+    const gate = document.getElementById("authGateOverlay");
+
+    if (!gate) return;
+
+    let loggedIn = false;
+
+    try {
+      const user = JSON.parse(
+        localStorage.getItem("fahim_curr_user_v2") || "null"
+      );
+
+      loggedIn = !!(user && user.name && user.contact);
+    } catch (error) {
+      loggedIn = false;
+    }
+
+    gate.style.display = loggedIn ? "none" : "flex";
+
+    if (!loggedIn) {
+      gate.style.position = "fixed";
+      gate.style.inset = "0";
+      gate.style.width = "100%";
+      gate.style.height = "100%";
+      gate.style.overflowY = "auto";
+      gate.style.background = "#070914";
+    }
+  }
+
+  enforceLogin();
+  window.addEventListener("pageshow", enforceLogin);
+})();
+</script></body>
 </html>
